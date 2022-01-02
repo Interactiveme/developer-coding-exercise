@@ -1,26 +1,22 @@
 from django.http import JsonResponse
-from utilities.file_loader import FileLoader
-from .models import Post, PostStub
+
+from blog.posts.data_layer.entities import PostEntity
+from blog.posts.data_layer.models import Post, PostStub
 
 
 def post(request, slug):
-    file_loader = FileLoader(slug + '.md')
-    post_data = file_loader.load()
 
-    post_result = Post()
-    post_result.parse(post_data)
-
+    post_result = PostEntity().get_item(slug)
     resp = {'data': post_result.__dict__}
     return JsonResponse(resp)
 
 
 def posts(request):
-    file_names = FileLoader.blog_post_file_names()
+    post_result = PostEntity().get_all_items()
+
     result = []
-    for file in file_names:
-        file_loader = FileLoader(file)
-        post_data = file_loader.load()
-        post_result = PostStub().parse(post_data)
+    for post in post_result:
+        stub = PostStub().parse(post_data)
         result.append(post_result.__dict__)
 
     resp = {'data': result}
