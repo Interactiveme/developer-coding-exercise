@@ -2,13 +2,19 @@ from django.conf import settings
 from os import listdir
 from os.path import isfile, join
 
+
 class FileLoader:
     def __init__(self, file_name):
         self.file_name = file_name
 
     def load(self):
-        f = open(settings.POST_DIRECTORY + '/' + self.file_name, "r")
-        return f.read()
+        if isfile(join(settings.POST_DIRECTORY, self.file_name)):
+            file = open(join(settings.POST_DIRECTORY, self.file_name), "r")
+            data = file.read()
+            file.close()
+            return data
+
+        return None
 
     @staticmethod
     def blog_post_file_names():

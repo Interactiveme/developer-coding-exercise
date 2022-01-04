@@ -1,10 +1,8 @@
 from django.utils.html import strip_tags
 from abc import ABC, abstractmethod
 
-from blog.posts.data_layer.models import Post, PostStub
-from blog.utilities.markdown_stripper import unmark
-from blog.utilities.word_counter import WordCounter
-from blog.utilities.file_loader import FileLoader
+from posts.data_layer.models import Post
+from utilities.file_loader import FileLoader
 
 
 class Entities(ABC):
@@ -18,10 +16,19 @@ class Entities(ABC):
 
 
 class PostEntity(Entities):
+    TITLE_KEY = 'Title:'
+    AUTHOR_KEY = 'Author:'
+    SLUG_KEY = 'Slug:'
+    METADATA_KEY = '===\n'
+
     def get_item(self, slug):
         file_loader = FileLoader(slug + '.md')
         post_content = file_loader.load()
+        if post_content is None:
+            return None
+
         post_result = self.parse(post_content)
+        return post_result
 
     def get_all_items(self):
         file_names = FileLoader.blog_post_file_names()
@@ -44,11 +51,6 @@ class PostEntity(Entities):
         post.title = strip_tags(metadata[0][metadata[0].find(':') + 1: len(metadata[0])].strip())
         post.author = strip_tags(metadata[1][metadata[1].find(':') + 1: len(metadata[1])].strip())
         post.slug = strip_tags(metadata[2][metadata[2].find(':') + 1: len(metadata[2])].strip())
-        content = post_content[meta_end + len(self.METADATA_KEY) + 1: len(post_content)] \
-            .replace('\n', ' ') \
-            .replace('  ', ' ')
+        post.content = post_content[meta_end + len(self.METADATA_KEY) + 1: len(post_content)]
 
-        content = unmark(content)
-        post.tags = WordCounter(content).top(5)
-        post.content = content
         return post

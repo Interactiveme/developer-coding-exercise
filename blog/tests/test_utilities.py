@@ -1,5 +1,8 @@
 import os
 
+from blog.posts.business_layer.post_service import PostService
+from blog.posts.data_layer.entities import PostEntity
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'blog.blog.settings')
 
 from django.test import TestCase
@@ -23,3 +26,22 @@ class WordCounterTestCase(TestCase):
         counter = WordCounter(words)
         top_words = counter.top(len(words))
         print(self.assertEqual(0, len(top_words)))
+
+
+class EntitiesTestCase(TestCase):
+
+    def test_get_item(self):
+        title = 'I’m betting on SPAs'
+        author = 'Jon Hollingsworth'
+        slug = 'Im-betting-on-SPAs'
+
+        post = PostEntity().get_item('Im-betting-on-SPAs')
+        self.assertEqual(post.title, title)
+        self.assertEqual(post.author, author)
+        self.assertEqual(post.slug, slug)
+
+
+class ServiceTestCase(TestCase):
+    def test_get_all_posts(self):
+        posts = PostService.get_all_posts()
+        self.assertTrue(len(posts) > 0)

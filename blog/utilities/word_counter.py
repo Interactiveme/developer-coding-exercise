@@ -30,7 +30,7 @@ class WordCounter:
         content_list = self._content.split()
         words = {}
         for word in content_list:
-            if word.lower() not in stopWords:
+            if word.isalpha() and word.lower() not in stopWords:
                 if word in words:
                     words[word] = words[word] + 1
                 else:

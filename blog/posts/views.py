@@ -1,23 +1,20 @@
 from django.http import JsonResponse
 
-from blog.posts.data_layer.entities import PostEntity
-from blog.posts.data_layer.models import Post, PostStub
+from posts.business_layer.post_service import PostService
 
 
 def post(request, slug):
+    post_result = PostService.get_post(slug)
+    if post_result is None:
+        resp = {'post': {}}
+    else:
+        resp = {'post': post_result.__dict__}
 
-    post_result = PostEntity().get_item(slug)
-    resp = {'data': post_result.__dict__}
     return JsonResponse(resp)
 
 
 def posts(request):
-    post_result = PostEntity().get_all_items()
+    all_posts = PostService.get_all_posts()
 
-    result = []
-    for post in post_result:
-        stub = PostStub().parse(post_data)
-        result.append(post_result.__dict__)
-
-    resp = {'data': result}
+    resp = {'posts': all_posts}
     return JsonResponse(resp)

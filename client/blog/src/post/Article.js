@@ -1,37 +1,50 @@
-import React, { Component } from 'react';
+import React, { Component , useState, useEffect} from 'react';
 import axios from 'axios';
+import { useParams } from "react-router-dom";
 
-export default class Article extends Component {
+export default function Article (props) {
+    const server = process.env.REACT_APP_SERVER_URL;
+    const { slug } = useParams();
+    const [article, setArticle] = useState({});
 
-    state = {
-        article: {}
-    }
-
-    componentDidMount() {
-        debugger
-        axios.get(`http://127.0.0.1:8000/posts/kiasuism-vs-no8-wire`)
+    useEffect(()=>{
+        console.log('component mounted!')
+        axios.get(`${server}posts/${slug}`)
             .then(res => {
                 const postData = res.data;
-                debugger;
-                this.setState({ article: postData.data });
+                debugger
+                setArticle(postData.post);
             })
-    }
+      },[])
 
-    renderTags (){
-        const tags = this.state.article.tags;
-        
-    }
+    const renderTags = () => {
+        const tags = article.tags || [];
+        return tags.join(', ')
+    };
 
-    render() {
+    
+    if(article.content){
         return (
             <main className="container">
                 <article className="blog-post">
-                    <h2 className="blog-post-title">{this.state.article.title}</h2>
-                    <span>Tags: {this.renderTags()}</span>
-                    <p>{this.state.article.content}</p>
+                    <h2 className="blog-post-title">{article.title}</h2>
+                    <span dangerouslySetInnerHTML = {{__html:article.content}}/>
+                    <p><b>Tags: {renderTags()}</b></p>
+                    <a href="/" className="stretched-link">Back</a>
+                </article>
+            </main>
+        )    
+    }else{
+
+        return (
+            <main className="container">
+                <article className="blog-post">
+                    <h2 className="blog-post-title">Whoops</h2>
+                    <p>We couldn't find the article you were looking for. Please try reading one of our other great articles that we are sure you will enjoy.</p>
                     <a href="/" className="stretched-link">Back</a>
                 </article>
             </main>
         )
     }
+    
 }

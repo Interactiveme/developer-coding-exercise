@@ -4,15 +4,18 @@ import { Link } from 'react-router-dom';
 
 export default class ArticleStubs extends Component {
 
+    server = process.env.REACT_APP_SERVER_URL;
+
     state = {
         posts: []
     }
 
     componentDidMount() {
-        axios.get(`http://127.0.0.1:8000/`)
+        debugger
+        axios.get(this.server)
             .then(res => {
                 const postData = res.data;
-                this.setState({ posts: postData.data });
+                this.setState({ posts: postData.posts });
         })
     }
 
@@ -24,9 +27,10 @@ export default class ArticleStubs extends Component {
         return (
             this.state.posts.map(
                 (_item, _index) => (
-                    <article className="blog-post">
+                    <article className="blog-post" key={_index}>
                         <h2 className="blog-post-title">{_item.title}</h2>
-                        <p>{_item.content}</p>
+                        <p><i>{_item.author}</i></p>
+                        <span className="blog-post-stub-content" dangerouslySetInnerHTML = {{__html:_item.content}}/>
                         <Link to={this.postRoute(_item)} className="stretched-link">Continue reading</Link>
                     </article>
                 )
