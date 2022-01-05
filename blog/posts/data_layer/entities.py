@@ -1,8 +1,8 @@
 # Interface to the stored data.
-from django.utils.html import strip_tags
 from abc import ABC, abstractmethod
 from posts.data_layer.models import Post
 from utilities.file_loader import FileLoader
+from django.conf import settings
 
 
 # The Entities class is a contract to program against. If the data storage mechanism is changed
@@ -26,20 +26,22 @@ class PostEntity(Entities):
     METADATA_KEY = '===\n'
 
     def get_item(self, slug):
-        file_loader = FileLoader(slug + '.md')
-        post_content = file_loader.load()
+        post_content = self.get_file_loader().load(slug + '.md')
         if post_content is None:
             return None
 
         post_result = self.parse(post_content)
         return post_result
 
+    def get_file_loader(self):
+        file_loader = FileLoader(settings.POST_DIRECTORY)
+        return file_loader
+
     def get_all_items(self):
-        file_names = FileLoader.blog_post_file_names()
+        file_names = self.get_file_loader().file_names_in_directory()
         result = []
         for file in file_names:
-            file_loader = FileLoader(file)
-            post_data = file_loader.load()
+            post_data = self.get_file_loader().load(file)
             post_result = self.parse(post_data)
             result.append(post_result)
 
