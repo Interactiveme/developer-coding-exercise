@@ -11,7 +11,7 @@ From the root directory run the following commands in a new terminal window
 
 ### React
 From the root directory run the following commands in a new terminal window
-* `cd client`
+* `cd client/blog`
 * `yarn install`
 * `yarn start`
 
