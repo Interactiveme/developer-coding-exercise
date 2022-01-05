@@ -10,14 +10,11 @@ function Home() {
       <div className="p-4 p-md-5 mb-4 text-white rounded bg-dark">
         <div className="col-md-6 px-0">
           <h1 className="display-4 fst-italic">Joseph Smith's programming exercise</h1>
-          <p className="lead my-3">I decided to use React as my front-end framework and Django for the backend. I'm currently unfimiliar with both, so I thought it could be a good oppertunity to learn something new</p>
+          <p className="lead my-3">I decided to use React for the frontend framework and Django for the backend. I'm currently unfimiliar with both, so I thought it could be a good oppertunity to learn something new.</p>
         </div>
       </div>
       <div className="row g-5">
         <div className="col-md-8">
-          <h3 className="pb-4 mb-4 fst-italic border-bottom">
-            From the Firehose
-          </h3>
           <ArticleStub />
         </div>
         <div className="col-md-4">

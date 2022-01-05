@@ -1,3 +1,6 @@
+# Separate business logic from the data layer. This class gets the post records from the data layer
+# and formats it before returning it to the view
+
 import math
 import markdown
 from posts.data_layer.entities import PostEntity

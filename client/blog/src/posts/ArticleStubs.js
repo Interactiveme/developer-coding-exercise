@@ -1,40 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component , useState, useEffect} from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-export default class ArticleStubs extends Component {
+const ArticleStubs = () => {
+    const server = process.env.REACT_APP_SERVER_URL;
+    const [articles, setArticles] = useState([]);
 
-    server = process.env.REACT_APP_SERVER_URL;
-
-    state = {
-        posts: []
-    }
-
-    componentDidMount() {
-        debugger
-        axios.get(this.server)
+    useEffect(()=>{
+        axios.get(server)
             .then(res => {
                 const postData = res.data;
-                this.setState({ posts: postData.posts });
-        })
-    }
+                setArticles(postData.posts);
+            })
+      },[])
 
-    postRoute (post) {
-        return `post/${post.slug}`;
-    }
-
-    render() {
-        return (
-            this.state.posts.map(
-                (_item, _index) => (
-                    <article className="blog-post" key={_index}>
-                        <h2 className="blog-post-title">{_item.title}</h2>
-                        <p><i>{_item.author}</i></p>
-                        <span className="blog-post-stub-content" dangerouslySetInnerHTML = {{__html:_item.content}}/>
-                        <Link to={this.postRoute(_item)} className="stretched-link">Continue reading</Link>
-                    </article>
-                )
-            )
-        )
-    }
+    
+    return articles.map((_item, _index) => (
+        <article className="blog-post" key={_item.slug}>
+            <h2 className="blog-post-title">{_item.title}</h2>
+            <p><i>{_item.author}</i></p>
+            <span className="blog-post-stub-content" dangerouslySetInnerHTML = {{__html:_item.content}}/>
+            <Link to={'post/'+_item.slug}>Continue reading</Link>
+        </article>
+    ))
 }
+
+export default ArticleStubs

@@ -2,17 +2,15 @@ import React, { Component , useState, useEffect} from 'react';
 import axios from 'axios';
 import { useParams } from "react-router-dom";
 
-export default function Article (props) {
+const Article = () => {
     const server = process.env.REACT_APP_SERVER_URL;
     const { slug } = useParams();
     const [article, setArticle] = useState({});
 
     useEffect(()=>{
-        console.log('component mounted!')
         axios.get(`${server}posts/${slug}`)
             .then(res => {
                 const postData = res.data;
-                debugger
                 setArticle(postData.post);
             })
       },[])
@@ -22,7 +20,6 @@ export default function Article (props) {
         return tags.join(', ')
     };
 
-    
     if(article.content){
         return (
             <main className="container">
@@ -34,8 +31,7 @@ export default function Article (props) {
                 </article>
             </main>
         )    
-    }else{
-
+    } else {
         return (
             <main className="container">
                 <article className="blog-post">
@@ -45,6 +41,7 @@ export default function Article (props) {
                 </article>
             </main>
         )
-    }
-    
+    }   
 }
+
+export default Article
