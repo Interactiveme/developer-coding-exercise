@@ -2,6 +2,7 @@
 
 
 ## Running the application
+The project has been developed using Python 3.10.0
 ### Django
 From the root directory run the following commands in a new terminal window
 * `cd blog`
