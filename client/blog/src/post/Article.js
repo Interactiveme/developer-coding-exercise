@@ -3,23 +3,23 @@ import axios from 'axios';
 import { useParams } from "react-router-dom";
 
 const ArticleContent = (article) => (
-    <>
+    <div className='blog-post'>
         <h2 className="blog-post-title">{article.title}</h2>
         <span dangerouslySetInnerHTML={{ __html: article.content }} />
         <p><b>Tags: {renderTags(article)}</b></p>
         <a href="/" className="stretched-link">Back</a>
-    </>
+    </div>
 )
 
 const EmptyContent = () => (
-    <>
+    <div className='blog-post'>
         <h2 className="blog-post-title">Whoops</h2>
         <p>
             We couldn't find the article you were looking for. Please try reading one of our other great
             articles that we are sure you will enjoy.
         </p>
         <a href="/" className="stretched-link">Back</a>
-    </>
+    </div>
 )
 
 const renderTags = (article) => {
