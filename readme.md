@@ -19,3 +19,10 @@ From the root directory run the following commands in a new terminal window
 ### Django Tests
 After completing the requirements under Django, from the root directory run the following commands in a new terminal window
 * `sh run_django_tests.sh`
+
+## Notes
+With more time, I would expand on the test suite's in both applications.\
+The Django application could benefit from testing the security of the file reading - ie could the slug allow access to the application's directory.\
+The React application has very limited and basic tests. I would implement testing on all http requests with axios, adding mocks and further testing on the rendered data.
+
+Thank you for the opportunity to interview with Media Suite.
