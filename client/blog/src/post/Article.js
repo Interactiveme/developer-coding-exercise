@@ -42,8 +42,6 @@ const Article = () => {
             })
     }, [server, slug])
 
-
-
     return article.content ? <ArticleContent article={article} /> : <EmptyContent />
 }
 
