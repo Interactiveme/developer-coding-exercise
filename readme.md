@@ -23,7 +23,7 @@ After completing the requirements under Django, from the root directory run the 
 ### React Tests
 After completing the requirements under React, from the root directory run the following commands in a new terminal window
 * `cd client/blog`
-* `yarn test`
+* `yarn test a`
 
 ## Notes
 With more time, I would expand on the test suite's in both applications.\

@@ -6,7 +6,7 @@ import Article from './post/Article'
 import Header from './header/Header'
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
-import { BrowserRouter, Route, Routes, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 // Put any other imports below so that CSS from your
 // components takes precedence over default styles.
