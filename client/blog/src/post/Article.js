@@ -15,17 +15,13 @@ const Article = () => {
             })
     }, [server, slug])
 
-    const ArticleContent = () => {
-
-        const tags = renderTags()
-
-        return (
-            <div className='blog-post'>
-                <span dangerouslySetInnerHTML={{ __html: article.content }} />
-                <p><b>Tags: {tags}</b></p>
-                <a href="/" className="stretched-link">Back</a>
-            </div>)
-    }
+    const ArticleContent = () => (
+        <div className='blog-post'>
+            <span dangerouslySetInnerHTML={{ __html: article.content }} />
+            <p><b>Tags: {renderTags()}</b></p>
+            <a href="/" className="stretched-link">Back</a>
+        </div>
+    )
 
     const EmptyContent = () => (
         <div className='blog-post'>
