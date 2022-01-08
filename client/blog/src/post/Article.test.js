@@ -6,10 +6,3 @@ test("renders Whoops", () => {
   const element = screen.getByText(/Whoops/i);
   expect(element).toBeInTheDocument();
 });
-
-
-test("renders Whoops", () => {
-  render(<Article />);
-  const element = screen.getByText(/Whoops/i);
-  expect(element).toBeInTheDocument();
-});
